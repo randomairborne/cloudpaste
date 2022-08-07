@@ -80,7 +80,8 @@
         if (resp.status != 200) {
             error.innerText = await resp.text();
         } else {
-            window.location.replace(await resp.text());
+            let json = await resp.json();
+            window.location.replace('/' + json['id']);
         }
     }
 </script>

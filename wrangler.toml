@@ -5,7 +5,7 @@ main = "build/worker/shim.mjs"
 compatibility_date = "2022-01-20"
 
 kv_namespaces = [
-  { binding = "CLOUDPASTE", id = "c4095d3ff96a44989ac977240eda01d3" },
+  { binding = "CLOUDPASTE", id = "c4095d3ff96a44989ac977240eda01d3", preview_id = "959a8f71157e4329880d9f8754e16f96" },
 ]
 
 [vars]
