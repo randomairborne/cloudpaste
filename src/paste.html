@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains+Mono&display=swap" rel="preload" as="style" />
+    <link href="https://fonts.googleapis.com/css?family=JetBrains+Mono&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paste</title>
+    <style>
+        body,
+        html {
+            background: #000;
+            font-family: "JetBrains Mono", monospace;
+        }
+
+        .center {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .menu {
+            display: flex;
+            padding: 1%;
+            font-size: 200%;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: #fff;
+            margin: 12px;
+            padding: 8px 24px;
+            border: 1px solid #222;
+            border-radius: 4px;
+            transition: background-color 250ms ease-in-out;
+            font-size: 18px;
+            float: left;
+        }
+
+        .btn:hover {
+            background-color: #111
+        }
+
+        .btn:active {
+            background-color: #222
+        }
+
+        .paste {
+            margin-left: 1%;
+            margin-right: 1%;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body onload="getPaste()">
+    <div class="center">
+        <div class="menu">
+            <a href="/" class="btn">New Paste</a>
+        </div>
+        <p id="err"></p>
+    </div>
+    <noscript>This website requires JavaScript. It's very minimal and is not used for tracking.</noscript>
+    <div class="paste" id="paste">
+        <pre>
+
+    </pre>
+    </div>
+</body>
+<script>
+    const paste = document.getElementById("paste");
+    const err = document.getElementById("err");
+    async function getPaste() {
+        let req = await fetch("/api" + window.location.pathname);
+        if (req.status != 200) { err.innerText = await req.text(); } else { paste.innerText = await req.text(); }
+    }
+</script>
+
+</html>

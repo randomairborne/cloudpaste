@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Paste</title>
+    <style>
+        @font-face {
+            font-family: "JetBrains Mono";
+            src: url("/jbmono.woff") format('woff');
+        }
+
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            color: #fff;
+            font-family: "JetBrains Mono", monospace;
+        }
+
+        textarea {
+            box-sizing: border-box;
+            background: #000;
+            border: #222 solid 1px;
+            color: #fff;
+            padding: 7px;
+            border-radius: 8px;
+            resize: both;
+            width: 80vw;
+            height: 70vh;
+            font-size: 2vh;
+        }
+
+        textarea::placeholder {
+            color: #eee;
+        }
+
+        button {
+            border-radius: 5px;
+            padding: 15px;
+            cursor: pointer;
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            border: #222 solid 1px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 5vh;
+            transition: background-color 250ms linear;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #111;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="wrapper">
+            <textarea placeholder="Paste your text here...." id="contents"></textarea>
+        </div>
+        <p id="err"></p>
+        <button onclick="submitPaste()">Paste</button>
+        <div class="wrapper">
+            <p>Pastes expire after one week.</p>
+        </div>
+    </div>
+</body>
+<script>
+    const area = document.getElementById("contents");
+    const error = document.getElementById("err");
+    async function submitPaste() {
+        let resp = await fetch("/api/new", { method: "POST", body: area.value });
+        if (resp.status != 200) {
+            error.innerText = await resp.text();
+        } else {
+            window.location.replace(await resp.text());
+        }
+    }
+</script>
+
+</html>
