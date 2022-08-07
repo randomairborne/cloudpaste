@@ -2,6 +2,10 @@
 name = "cloudpaste"
 version = "0.0.1"
 edition = "2021"
+authors = ["valkyrie_pilot <valk@randomairborne.dev>"]
+description = "A cloudflare worker-powered pastebin!"
+repository = "https://github.com/randomairborne/cloudpaste"
+license = "MIT"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
