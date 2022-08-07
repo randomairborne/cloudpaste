@@ -36,6 +36,9 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
                     Ok(val) => val,
                     Err(_) => return Response::error("Failed to get data from POST request", 400),
                 };
+                if data.len() > 20_000_000 {
+                    return Response::error("Oops, too long! Pastes must be less then 20MB", 400)
+                }
                 let put = match kv.put(&id, data) {
                     Ok(val) => val,
                     Err(e) => return Response::error(format!("KV error: {e}"), 500),
