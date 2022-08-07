@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="robots" content="noindex">
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paste</title>
+    <title>Paste {{ id }}</title>
     <style>
         body,
         html {
@@ -58,27 +58,19 @@
     </style>
 </head>
 
-<body onload="getPaste()">
+<body>
     <div class="center">
         <div class="menu">
             <a href="/" class="btn">New Paste</a>
+            <a href="/raw/{{ id }}" class="btn">View Raw</a>
         </div>
         <p id="err"></p>
     </div>
-    <noscript>This website requires JavaScript. It's very minimal and is not used for tracking.</noscript>
-    <div class="paste" id="paste">
+    <div class="paste">
         <pre>
-
+        {{ content }}
     </pre>
     </div>
 </body>
-<script>
-    const paste = document.getElementById("paste");
-    const err = document.getElementById("err");
-    async function getPaste() {
-        let req = await fetch("/api" + window.location.pathname);
-        if (req.status != 200) { err.innerText = await req.text(); } else { paste.innerText = await req.text(); }
-    }
-</script>
 
 </html>

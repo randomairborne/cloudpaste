@@ -9,10 +9,37 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
     let router = Router::new();
     router
         .get("/", |_, _| Response::from_html(include_str!("index.html")))
-        .get("/:paste", |_, _| {
-            Response::from_html(include_str!("paste.html"))
+        .get_async("/:id", |_req, ctx| async move {
+            if let Ok(kv) = ctx.kv(NAMESPACE) {
+                let key = match ctx.param("id") {
+                    Some(val) => val,
+                    None => return Response::error("No paste ID!", 400),
+                };
+                let maybe_value = match kv.get(key).text().await {
+                    Ok(val) => val,
+                    Err(e) => return Response::error(format!("KV Error: {}", e), 500),
+                };
+
+                if let Some(value) = maybe_value {
+                    let mut context = tera::Context::new();
+                    context.insert("id", key);
+                    context.insert("content", &value);
+                    if let Ok(page) =
+                        tera::Tera::one_off(include_str!("paste.html"), &context, true)
+                    {
+                        return Response::from_html(page);
+                    }
+
+                    return Response::error(
+                        "Templating failed! (this is a bug, github.com/randomairborne/cloudpaste)",
+                        500,
+                    );
+                }
+                return Response::error("Paste Not Found!", 404);
+            }
+            Response::error("Account Misconfigured, no CLOUDPASTE kv found", 500)
         })
-        .get_async("/api/:id", |_req, ctx| async move {
+        .get_async("/raw/:id", |_req, ctx| async move {
             if let Ok(kv) = ctx.kv(NAMESPACE) {
                 let key = match ctx.param("id") {
                     Some(val) => val,
@@ -37,7 +64,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
                     Err(_) => return Response::error("Failed to get data from POST request", 400),
                 };
                 if data.len() > 20_000_000 {
-                    return Response::error("Oops, too long! Pastes must be less then 20MB", 400)
+                    return Response::error("Oops, too long! Pastes must be less then 20MB", 400);
                 }
                 let put = match kv.put(&id, data) {
                     Ok(val) => val,
@@ -50,10 +77,9 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
             }
             Response::error("Account Misconfigured, no CLOUDPASTE kv found", 500)
         })
-        .get(
-            "/jbmono.woff",
-            |_req, _ctx| Response::from_bytes(include_bytes!("jbmono.woff").to_vec()),
-        )
+        .get("/jbmono.woff", |_req, _ctx| {
+            Response::from_bytes(include_bytes!("jbmono.woff").to_vec())
+        })
         .run(req, env)
         .await
 }
