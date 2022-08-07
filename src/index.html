@@ -81,9 +81,9 @@
             error.innerText = await resp.text();
         } else {
             let json = await resp.json();
+            window.localStorage.setItem(json['id'], json['revoke'])
             window.location.replace('/' + json['id']);
         }
     }
 </script>
-
 </html>

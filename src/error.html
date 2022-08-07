@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Paste</title>
+    <style>
+        @font-face {
+            font-family: "JetBrains Mono";
+            src: url("/jbmono.woff") format('woff');
+        }
+
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            color: #fff;
+            font-family: "JetBrains Mono", monospace;
+        }
+
+        button {
+            border-radius: 5px;
+            padding: 15px;
+            cursor: pointer;
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            border: #222 solid 1px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 5vh;
+            transition: background-color 250ms linear;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #111;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="menu">
+            <a href="/" class="btn">New Paste</a>
+        </div>
+        <h1>{{ error }}</h1>
+    </div>
+</body>
+</html>

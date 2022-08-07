@@ -23,7 +23,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
         .get_async("/:id", handlers::template)
         .get_async("/raw/:id", handlers::raw)
         .post_async("/api/new", handlers::create)
-        .post_async("/api/delete/:id", handlers::delete)
+        .post_async("/api/delete/:id/:token", handlers::delete)
         .get("/jbmono.woff", |_req, _ctx| {
             Response::from_bytes(include_bytes!("jbmono.woff").to_vec())
         })
