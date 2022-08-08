@@ -7,6 +7,7 @@ compatibility_date = "2022-01-20"
 kv_namespaces = [
   { binding = "CLOUDPASTE", id = "c4095d3ff96a44989ac977240eda01d3", preview_id = "959a8f71157e4329880d9f8754e16f96" },
 ]
+account_id = "10587e6bb7932116ebfce0b7c5d0178e"
 
 [vars]
 WORKERS_RS_VERSION = "0.0.9"
