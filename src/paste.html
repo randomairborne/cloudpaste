@@ -66,6 +66,7 @@
         <div class="menu">
             <a href="/" class="btn">New Paste</a>
             <a href="/raw/{{ id }}" class="btn">View Raw</a>
+            <a href="javascript:copyLink()" class="btn" id="copylink">Copy Share Link</a>
             <a hidden href="javascript:deletePaste()" id="deletebtn" class="btn">Delete Paste</a>
         </div>
     </div>
@@ -79,10 +80,16 @@
 <script>
     const deletebtn = document.getElementById('deletebtn');
     const status = document.getElementById('status');
+    const linkcopy = document.getElementById('copylink')
     const id = "{{ id }}";
     const deletetoken = JSON.parse(window.localStorage.getItem(id))['revoketoken'];
     if (deletetoken) {
         deletebtn.hidden = false;
+    }
+    for (let [key, value] of Object.entries(window.localStorage)) {
+        if (JSON.parse(value)['added'] >= Date.now() + 604800) {
+            window.localStorage.removeItem(key);
+        }
     }
     async function deletePaste() {
         let resp = await fetch("/api/delete/" + id + '/' + deletetoken, { method: "POST" });
@@ -93,10 +100,15 @@
             status.innerText = await resp.text();
         }
     }
-    for (let [key, value] of Object.entries(window.localStorage)) {
-        if (JSON.parse(value)['added'] >= Date.now() + 604800) {
-            window.localStorage.removeItem(key);
-        }
+    async function copyLink() {
+        let link = window.location.protocol + "//" + window.location.host + "/" + id.toString();
+        navigator.clipboard.writeText(link);
+        linkcopy.innerText = "Copied link!";
+        await sleep(5000);
+        linkcopy.innerText = "Copy Share Link"
+    }
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 </script>
 
