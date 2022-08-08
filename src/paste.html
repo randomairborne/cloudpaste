@@ -80,7 +80,7 @@
     const deletebtn = document.getElementById('deletebtn');
     const status = document.getElementById('status');
     const id = "{{ id }}";
-    const deletetoken = window.localStorage.getItem(id);
+    const deletetoken = JSON.parse(window.localStorage.getItem(id))['revoketoken']; \
     if (deletetoken) {
         deletebtn.hidden = false;
     }
@@ -91,6 +91,11 @@
             window.location.replace('/');
         } else {
             status.innerText = await resp.text();
+        }
+    }
+    for (let [key, value] of Object.entries(window.localStorage)) {
+        if (JSON.parse(value)['added'] >= Date.now() + 604800) {
+            window.localStorage.removeItem(key);
         }
     }
 </script>

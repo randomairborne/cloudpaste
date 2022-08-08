@@ -93,7 +93,7 @@
             error.innerText = await resp.text();
         } else {
             let json = await resp.json();
-            window.localStorage.setItem(json['id'], json['revoke'])
+            window.localStorage.setItem(json['id'], JSON.stringify({ "revoketoken": json['revoke'], "added": Date.now() }));
             window.location.replace('/' + json['id']);
         }
     }
