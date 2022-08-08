@@ -80,7 +80,7 @@
     const deletebtn = document.getElementById('deletebtn');
     const status = document.getElementById('status');
     const id = "{{ id }}";
-    const deletetoken = JSON.parse(window.localStorage.getItem(id))['revoketoken']; \
+    const deletetoken = JSON.parse(window.localStorage.getItem(id))['revoketoken'];
     if (deletetoken) {
         deletebtn.hidden = false;
     }
