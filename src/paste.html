@@ -66,7 +66,7 @@
         <div class="menu">
             <a href="/" class="btn">New Paste</a>
             <a href="/raw/{{ id }}" class="btn">View Raw</a>
-            <a href="javascript:copyLink()" class="btn" id="copylink">Copy Share Link</a>
+            <a hidden href="javascript:copyLink()" class="btn" id="copylink">Copy Share Link</a>
             <a hidden href="javascript:deletePaste()" id="deletebtn" class="btn">Delete Paste</a>
         </div>
     </div>
@@ -83,6 +83,7 @@
     const linkcopy = document.getElementById('copylink')
     const id = "{{ id }}";
     const deletetoken = JSON.parse(window.localStorage.getItem(id))['revoketoken'];
+    linkcopy.hidden = false;
     if (deletetoken) {
         deletebtn.hidden = false;
     }
