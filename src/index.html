@@ -8,7 +8,7 @@
     <style>
         @font-face {
             font-family: "JetBrains Mono";
-            src: url("/jbmono.woff") format('woff');
+            src: url("https://cdn.valk.sh/jbmono.woff") format('woff');
         }
 
         body {
@@ -57,29 +57,38 @@
             background: #111;
         }
     </style>
+    <noscript>
+        <style>
+            .jsonly {
+                display: none !important
+            }
+        </style>
+    </noscript>
 </head>
 
 <body>
     <div>
-        <div class="wrapper">
-            <textarea placeholder="Paste your text here...." id="contents"></textarea>
-        </div>
-        <noscript>
-            <h1>Unfortunately, this page requires JavaScript. There is nothing that isn't absolutely nessecary. Sorry.
-            </h1>
-        </noscript>
-        <p id="err"></p>
-        <button onclick="submitPaste()">Paste</button>
-        <div class="wrapper">
-            <p>Pastes expire after one week.</p>
-        </div>
+        <form action="/api/new/nojs" method="post" enctype="multipart/form-data" id="form">
+            <div class="wrapper">
+                <textarea placeholder="Paste your text here...." name="contents"></textarea>
+            </div>
+            <p id="err"></p>
+            <noscript><button>Paste</button></noscript>
+            <button class="jsonly" type="button" onclick="submitPaste()">Paste</button>
+            <div class="wrapper">
+                <p>Pastes expire after one week.</p>
+            </div>
+        </form>
     </div>
 </body>
 <script>
-    const area = document.getElementById("contents");
     const error = document.getElementById("err");
+    const form = document.getElementById("form");
     async function submitPaste() {
-        let resp = await fetch("/api/new", { method: "POST", body: area.value });
+        let resp = await fetch("/api/new", {
+            body: new FormData(form),
+            method: "POST",
+        });
         if (resp.status != 200) {
             error.innerText = await resp.text();
         } else {

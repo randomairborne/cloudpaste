@@ -1,12 +1,14 @@
-mod handlers;
+mod gets;
+mod posts;
 use worker::*;
 
 const SECONDS_IN_A_WEEK: u64 = 604_800;
 const NAMESPACE: &str = "CLOUDPASTE";
+const MAX_UPLOAD_BYTES: usize = 20_000_000;
 
 fn log_request(req: &Request) {
     console_log!(
-        "{} - [{}], located within: {}",
+        "{} - [{}], located within {}",
         Date::now().to_string(),
         req.path(),
         req.cf().region().unwrap_or_else(|| "unknown region".into())
@@ -20,12 +22,14 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
     let router = Router::new();
     router
         .get("/", |_, _| Response::from_html(include_str!("index.html")))
-        .get_async("/:id", handlers::template)
-        .get_async("/raw/:id", handlers::raw)
-        .post_async("/api/new", handlers::create)
-        .post_async("/api/delete/:id/:token", handlers::delete)
-        .get("/jbmono.woff", |_req, _ctx| {
-            Response::from_bytes(include_bytes!("jbmono.woff").to_vec())
+        .get_async("/:id", gets::template)
+        .get_async("/raw/:id", gets::raw)
+        .post_async("/api/delete/:id/:token", posts::delete)
+        .post_async("/api/new", move |req, ctx| async {
+            posts::new(req, ctx, false).await
+        })
+        .post_async("/api/new/nojs", move |req, ctx| async {
+            posts::new(req, ctx, true).await
         })
         .run(req, env)
         .await
@@ -46,4 +50,19 @@ fn randstr(length: usize) -> String {
         );
     }
     result
+}
+
+fn error(err: &str, statuscode: u16, html: bool) -> Result<Response> {
+    if html {
+        let mut context = tera::Context::new();
+        context.insert("error", err);
+        let mut headers = Headers::new();
+        headers.append("Content-Type", "text/html")?;
+        if let Ok(resp_html) = tera::Tera::one_off(include_str!("error.html"), &context, true) {
+            return Ok(Response::error(resp_html, statuscode)?.with_headers(headers));
+        }
+        Response::error(err, statuscode)
+    } else {
+        Response::error(err, statuscode)
+    }
 }
