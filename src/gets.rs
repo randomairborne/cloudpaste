@@ -17,7 +17,7 @@ pub async fn template(_req: Request, ctx: RouteContext<()>) -> Result<Response> 
             let mut context = tera::Context::new();
             context.insert("id", key);
             context.insert("content", &value);
-            if let Ok(page) = tera::Tera::one_off(include_str!("paste.html"), &context, true) {
+            if let Ok(page) = tera::Tera::one_off(include_str!("html/paste.html"), &context, true) {
                 return Response::from_html(page);
             }
 

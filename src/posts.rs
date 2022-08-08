@@ -88,7 +88,7 @@ pub async fn delete(mut _req: Request, ctx: RouteContext<()>) -> Result<Response
                         return Response::error("No delete permissions!", 401);
                     }
                 } else {
-                    return Response::error("No delete token found!", 401);
+                    return Response::error("No delete token found!", 500);
                 }
             }
             Err(e) => {

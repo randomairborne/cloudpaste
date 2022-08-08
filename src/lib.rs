@@ -21,7 +21,13 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
     log_request(&req);
     let router = Router::new();
     router
-        .get("/", |_, _| Response::from_html(include_str!("index.html")))
+        .get("/", |_, _| Response::from_html(include_str!("html/index.html")))
+        .get("/about", |_, _| {
+            Response::from_html(include_str!("html/about.html"))
+        })
+        .get("/settings", |_, _| {
+            Response::from_html(include_str!("html/settings.html"))
+        })
         .get_async("/:id", gets::template)
         .get_async("/raw/:id", gets::raw)
         .post_async("/api/delete/:id/:token", posts::delete)
@@ -58,7 +64,7 @@ fn error(err: &str, statuscode: u16, html: bool) -> Result<Response> {
         context.insert("error", err);
         let mut headers = Headers::new();
         headers.append("Content-Type", "text/html")?;
-        if let Ok(resp_html) = tera::Tera::one_off(include_str!("error.html"), &context, true) {
+        if let Ok(resp_html) = tera::Tera::one_off(include_str!("html/error.html"), &context, true) {
             return Ok(Response::error(resp_html, statuscode)?.with_headers(headers));
         }
         Response::error(err, statuscode)

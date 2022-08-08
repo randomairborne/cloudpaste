@@ -67,19 +67,13 @@
 </head>
 
 <body>
-    <div>
-        <form action="/api/new/nojs" method="post" enctype="multipart/form-data" id="form">
-            <div class="wrapper">
-                <textarea placeholder="Paste your text here...." name="contents"></textarea>
-            </div>
-            <p id="err"></p>
-            <noscript><button>Paste</button></noscript>
-            <button class="jsonly" type="button" onclick="submitPaste()">Paste</button>
-            <div class="wrapper">
-                <p>Pastes expire after one week.</p>
-            </div>
-        </form>
-    </div>
+    <form action="/api/new/nojs" method="post" enctype="multipart/form-data" id="form">
+        <textarea placeholder="Paste your text here...." name="contents"></textarea>
+        <p id="err"></p>
+        <noscript><button>Paste</button></noscript>
+        <button class="jsonly" type="button" onclick="submitPaste()">Paste</button>
+        <p>Pastes expire after one week.</p>
+    </form>
 </body>
 <script>
     const error = document.getElementById("err");
