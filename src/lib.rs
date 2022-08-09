@@ -4,7 +4,7 @@ use worker::*;
 
 const SECONDS_IN_A_WEEK: u64 = 604_800;
 const NAMESPACE: &str = "CLOUDPASTE";
-const MAX_UPLOAD_BYTES: usize = 20_000_000;
+const MAX_UPLOAD_BYTES: usize = 30_000_000;
 
 fn log_request(req: &Request) {
     console_log!(
@@ -24,9 +24,6 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
         .get("/", |_, _| Response::from_html(include_str!("html/index.html")))
         .get("/about", |_, _| {
             Response::from_html(include_str!("html/about.html"))
-        })
-        .get("/settings", |_, _| {
-            Response::from_html(include_str!("html/settings.html"))
         })
         .get_async("/:id", gets::template)
         .get_async("/raw/:id", gets::raw)
