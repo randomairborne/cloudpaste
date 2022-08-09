@@ -1,0 +1,97 @@
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("https://cdn.valk.sh/jbmono.woff") format('woff');
+}
+
+body {
+    background: #000;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: #fff;
+    font-family: "JetBrains Mono", monospace;
+}
+
+a {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+code {
+    background-color: #222;
+    border-radius: 3px;
+    font-family: courier, monospace;
+    padding: 0 3px;
+}
+
+textarea {
+    box-sizing: border-box;
+    background: #000;
+    border: #222 solid 1px;
+    color: #fff;
+    padding: 7px;
+    border-radius: 8px;
+    resize: both;
+    width: 80vw;
+    height: 70vh;
+    font-size: 2vh;
+}
+
+textarea::placeholder {
+    color: #eee;
+}
+
+.btn {
+    text-decoration: none;
+    color: #fff;
+    margin: 6px;
+    padding: 8px 16px;
+    border: 1px solid #222;
+    border-radius: 4px;
+    transition: background-color 250ms ease-in-out;
+    font-size: 18px;
+}
+
+.btn:hover {
+    background-color: #111
+}
+
+.btn:active {
+    background-color: #222
+}
+
+.menu {
+    padding: 1%;
+    font-size: 200%;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.paste {
+    margin-left: 1%;
+    margin-right: 1%;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    word-wrap: break-word;
+}

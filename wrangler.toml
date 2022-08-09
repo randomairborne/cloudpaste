@@ -13,4 +13,4 @@ account_id = "10587e6bb7932116ebfce0b7c5d0178e"
 WORKERS_RS_VERSION = "0.0.9"
 
 [build]
-command = "cargo install -q worker-build && worker-build --release"
+command = "worker-build --release"

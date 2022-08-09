@@ -2,92 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="robots" content="noindex">
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
     <title>About CloudPaste</title>
-    <style>
-        @font-face {
-            font-family: "JetBrains Mono";
-            src: url("https://cdn.valk.sh/jbmono.woff") format('woff');
-        }
-
-        body,
-        html {
-            background: #000;
-            font-family: "JetBrains Mono", monospace;
-        }
-
-        .center {
-            justify-content: center;
-            align-items: center;
-            display: flex;
-        }
-
-        .menu {
-            display: flex;
-            padding: 1%;
-            font-size: 200%;
-        }
-
-        .btn {
-            text-decoration: none;
-            color: #fff;
-            margin: 12px;
-            padding: 8px 24px;
-            border: 1px solid #222;
-            border-radius: 4px;
-            transition: background-color 250ms ease-in-out;
-            font-size: 18px;
-            float: left;
-        }
-
-        .btn:hover {
-            background-color: #111
-        }
-
-        .btn:active {
-            background-color: #222
-        }
-
-        p,
-        h1,
-        h2,
-        h3,
-        h4 {
-            margin-left: 1%;
-            margin-right: 1%;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            word-wrap: break-word;
-        }
-
-        code {
-            background-color: #222;
-            border-radius: 3px;
-            font-family: courier, monospace;
-            padding: 0 3px;
-        }
-
-        a:visited {
-            color: aqua;
-            background-color: transparent;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: aqua;
-            background-color: transparent;
-            text-decoration: underline;
-        }
-
-        a:active {
-            color: aqua;
-            background-color: transparent;
-            text-decoration: underline;
-        }
-    </style>
 </head>
 
 <body>
@@ -96,32 +13,33 @@
             <a href="/" class="btn">New Paste</a>
         </div>
     </div>
-    <h1>About</h1>
-    <p>Hey! You're using an instance of <a href="https://github.com/randomairborne/cloudpaste">CloudPaste</a>. My hosted
+    <h1 class="paste">About</h1>
+    <p class="paste">Hey! You're using an instance of <a
+            href="https://github.com/randomairborne/cloudpaste">CloudPaste</a>. My hosted
         version of this is available at <a href="https://paste.mcping.me">https://paste.mcping.me</a>. It's backed by
         CloudFlare KV, using an open-source CloudFlare Worker. I host it for free, for everyone, just don't do anything
         illegal.
         <br>
         Love, <a href="https://randomairborne.dev">valk</a>.
     </p>
-    <h2>FAQ</h2>
-    <h3>Why do you have an upload limit?</h3>
-    <p>
+    <h2 class="paste">FAQ</h2>
+    <h3 class="paste">Why do you have an upload limit?</h3>
+    <p class="paste">
         CloudFlare charges for certain amounts of data. My upload limit is higher then most others, but it comes at the
         cost of deleting faster.
     </p>
-    <h3>Do you sell or give out my data?</h3>
-    <p>
+    <h3 class="paste">Do you sell or give out my data?</h3>
+    <p class="paste">
         No.
     </p>
-    <h3>Then how do you make money?</h3>
-    <p>
+    <h3 class="paste">Then how do you make money?</h3>
+    <p class="paste">
         I don't. I provide this service for free, out of my own pocket. If you'd like to support me, see
         <a href="https://github.com/sponsors/randomairborne">my GitHub Sponsors page</a>. Thanks!
     </p>
-    <h2>API</h2>
-    <h3>Creation</h3>
-    <h4><code>/api/new</code></h4>
+    <h2 class="paste">API</h2>
+    <h3 class="paste">Creation</h3>
+    <h4 class="paste"><code>/api/new</code></h4>
     <p>
         You can programmatically create pastes using this route.<br>
         Accepts <code>multipart/form-data</code>, with the field <code>contents</code> as the paste content. The max
@@ -130,8 +48,8 @@
         If the request failed, it returns a human-readable error.
     </p>
 
-    <h3>Deletion</h3>
-    <h4><code>/api/delete/&lt;id&gt;/&lt;token&gt;</code></h4>
+    <h3 class="paste">Deletion</h3>
+    <h4 class="paste"><code>/api/delete/&lt;id&gt;/&lt;token&gt;</code></h4>
     <p>
         The revoke token gotten from the creation route can be used to delete pastes. It returns a human-readable string
         and a response code.

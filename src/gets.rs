@@ -50,3 +50,9 @@ pub async fn raw(_req: Request, ctx: RouteContext<()>) -> Result<Response> {
     }
     Response::error("Account Misconfigured, no CLOUDPASTE kv found", 500)
 }
+
+pub fn style(_req: Request, _ctx: RouteContext<()>) -> Result<Response> {
+    let mut headers = Headers::new();
+    headers.append("Content-Type", "text/css")?;
+    Ok(Response::ok(include_str!("html/main.css"))?.with_headers(headers))
+}

@@ -2,82 +2,25 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
     <title>Create New Paste</title>
-    <style>
-        @font-face {
-            font-family: "JetBrains Mono";
-            src: url("https://cdn.valk.sh/jbmono.woff") format('woff');
-        }
-
-        body {
-            background: #000;
-            display: flex;
-            justify-content: center;
-            text-align: center;
-            align-items: center;
-            color: #fff;
-            font-family: "JetBrains Mono", monospace;
-        }
-
-        textarea {
-            box-sizing: border-box;
-            background: #000;
-            border: #222 solid 1px;
-            color: #fff;
-            padding: 7px;
-            border-radius: 8px;
-            resize: both;
-            width: 80vw;
-            height: 70vh;
-            font-size: 2vh;
-        }
-
-        textarea::placeholder {
-            color: #eee;
-        }
-
-        button {
-            border-radius: 5px;
-            padding: 15px;
-            cursor: pointer;
-            display: inline-block;
-            background: #000;
-            color: #fff;
-            border: #222 solid 1px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 5vh;
-            transition: background-color 250ms linear;
-            margin-top: 20px;
-        }
-
-        button:hover {
-            background: #111;
-        }
-    </style>
-    <noscript>
-        <style>
-            .jsonly {
-                display: none !important
-            }
-        </style>
-    </noscript>
 </head>
 
 <body>
     <form action="/api/new/nojs" method="post" enctype="multipart/form-data" id="form">
         <textarea placeholder="Paste your text here...." name="contents"></textarea>
         <p id="err"></p>
-        <noscript><button>Paste</button></noscript>
-        <button class="jsonly" type="button" onclick="submitPaste()">Paste</button>
-        <p>Pastes expire after one week.</p>
+        <noscript><button class="btn">Paste</button></noscript>
+        <button hidden type="button" id="submitbtn" class="btn pastebtn" onclick="submitPaste()">Paste</button>
+        <h3>Pastes expire after one week.</h3>
     </form>
 </body>
 <script>
     const error = document.getElementById("err");
     const form = document.getElementById("form");
+    const submitbtn = document.getElementById("submitbtn");
+    submitbtn.hidden = false;
     async function submitPaste() {
         let resp = await fetch("/api/new", {
             body: new FormData(form),

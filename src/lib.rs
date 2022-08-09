@@ -8,10 +8,13 @@ const MAX_UPLOAD_BYTES: usize = 30_000_000;
 
 fn log_request(req: &Request) {
     console_log!(
-        "{} - [{}], located within {}",
+        "{} - [{}], located within {}, {}, {}, {}",
         Date::now().to_string(),
         req.path(),
-        req.cf().region().unwrap_or_else(|| "unknown region".into())
+        req.cf().city().unwrap_or_else(|| "(unknown)".into()),
+        req.cf().region().unwrap_or_else(|| "(unknown)".into()),
+        req.cf().country().unwrap_or_else(|| "(unknown)".into()),
+        req.cf().continent().unwrap_or_else(|| "(unknown)".into()),
     );
 }
 
@@ -25,6 +28,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
         .get("/about", |_, _| {
             Response::from_html(include_str!("html/about.html"))
         })
+        .get("/main.css", gets::style)
         .get_async("/:id", gets::template)
         .get_async("/raw/:id", gets::raw)
         .post_async("/api/delete/:id/:token", posts::delete)
