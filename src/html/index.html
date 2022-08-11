@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/main.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
     <title>Create New Paste</title>
 </head>
 
@@ -17,7 +18,6 @@
     </form>
 </body>
 <script>
-    const error = document.getElementById("err");
     const form = document.getElementById("form");
     const submitbtn = document.getElementById("submitbtn");
     submitbtn.hidden = false;
@@ -27,9 +27,9 @@
             method: "POST",
         });
         if (resp.status != 200) {
-            error.innerText = await resp.text();
+            window.alert(await resp.text())
         } else {
-            let json = await resp.json();
+            let json = await resp.json().catch(e => window.alert("Error redirecting: " + e));
             window.localStorage.setItem(json['id'], JSON.stringify({ "revoketoken": json['revoke'], "added": Date.now() }));
             window.location.replace('/' + json['id']);
         }

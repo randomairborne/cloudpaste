@@ -70,6 +70,7 @@ textarea::placeholder {
     border-radius: 4px;
     transition: background-color 250ms ease-in-out;
     font-size: 18px;
+    background-color: #000;
 }
 
 .btn:hover {

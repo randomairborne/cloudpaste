@@ -4,6 +4,7 @@
 <head>
     <meta name="robots" content="noindex">
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
     <link rel="stylesheet" href="/main.css">
     <title>Paste {{ id }}</title>
 </head>
@@ -17,13 +18,11 @@
             <a hidden href="javascript:copyLink()" class="btn" id="copylink">Copy Share Link</a>
             <a hidden href="javascript:deletePaste()" id="deletebtn" class="btn">Delete Paste</a>
         </div>
-        <p id="status"></p>
         <pre class="paste">{{ content }}</pre>
     </div>
 </body>
 <script>
     const deletebtn = document.getElementById('deletebtn');
-    const status = document.getElementById('status');
     const linkcopy = document.getElementById('copylink')
     const id = "{{ id }}";
     const deletetoken = JSON.parse(window.localStorage.getItem(id))['revoketoken'];
@@ -42,7 +41,7 @@
             window.alert(await resp.text());
             window.location.replace('/');
         } else {
-            status.innerText = await resp.text();
+            window.alert(await resp.text())
         }
     }
     async function copyLink() {
