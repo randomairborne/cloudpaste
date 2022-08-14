@@ -25,8 +25,8 @@
     const deletebtn = document.getElementById('deletebtn');
     const linkcopy = document.getElementById('copylink')
     const id = "{{ id }}";
-    const deletetoken = JSON.parse(window.localStorage.getItem(id))['revoketoken'];
     linkcopy.hidden = false;
+    const deletetoken = JSON.parse(window.localStorage.getItem(id))['revoketoken'];
     if (deletetoken) {
         deletebtn.hidden = false;
     }
