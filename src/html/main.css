@@ -71,6 +71,7 @@ textarea::placeholder {
     transition: background-color 250ms ease-in-out;
     font-size: 18px;
     background-color: #000;
+    white-space: nowrap;
 }
 
 .btn:hover {
@@ -85,14 +86,14 @@ textarea::placeholder {
     padding: 1%;
     font-size: 200%;
     justify-content: center;
-    white-space: nowrap;
 }
 
 .paste {
-    margin-left: 1%;
-    margin-right: 1%;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    word-wrap: break-word;
+    text-align: left;
+    background-color: #222;
+    border-color: #eee;
+    border-style: inset;
+    border-radius: 5px;
+    border-width: 2px;
+    padding: 10px;
 }
