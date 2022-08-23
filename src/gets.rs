@@ -8,15 +8,20 @@ pub async fn template(_req: Request, ctx: RouteContext<()>) -> Result<Response> 
             Some(val) => val,
             None => return error("No paste ID!", 400, true),
         };
-        let maybe_value = match kv.get(key).text().await {
+        let maybe_value = match kv
+            .get(key)
+            .text_with_metadata::<crate::PasteMetadata>()
+            .await
+        {
             Ok(val) => val,
             Err(e) => return error(&format!("KV Error: {}", e), 500, true),
         };
 
-        if let Some(value) = maybe_value {
+        if let (Some(value), Some(meta)) = maybe_value {
             let mut context = tera::Context::new();
             context.insert("id", key);
             context.insert("content", &value);
+            context.insert("language", &meta.language);
             if let Ok(page) = tera::Tera::one_off(include_str!("html/paste.html"), &context, true) {
                 return Response::from_html(page);
             }

@@ -76,3 +76,9 @@ fn error(err: &str, statuscode: u16, html: bool) -> Result<Response> {
         Response::error(err, statuscode)
     }
 }
+
+#[derive(serde::Serialize, serde::Deserialize)]
+struct PasteMetadata {
+    revoke: String,
+    language: String,
+}

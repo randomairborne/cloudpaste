@@ -37,11 +37,23 @@ pub async fn new(mut req: Request, ctx: RouteContext<()>, is_raw_form: bool) -> 
         } else {
             return error("Failed to get content from form-data", 400, is_raw_form);
         };
+        let language = if let Some(language) = form.get("language") {
+            match language {
+                FormEntry::Field(f) => f,
+                FormEntry::File(_) => return error("A language is not a file.", 400, is_raw_form),
+            }
+        } else {
+            "nohighlight".to_string()
+        };
         let put = match kv.put(&id, data) {
             Ok(val) => val,
             Err(e) => return error(&format!("KV error: {e}"), 500, is_raw_form),
         };
-        let meta = match put.metadata(&revoke) {
+        let metadata = crate::PasteMetadata {
+            revoke: revoke.clone(),
+            language,
+        };
+        let meta = match put.metadata(&metadata) {
             Ok(val) => val,
             Err(e) => {
                 return error(
@@ -81,10 +93,14 @@ pub async fn delete(mut _req: Request, ctx: RouteContext<()>) -> Result<Response
             Some(val) => val,
             None => return Response::error("No delete token!!", 400),
         };
-        match kv.get(id).text_with_metadata::<String>().await {
+        match kv
+            .get(id)
+            .text_with_metadata::<crate::PasteMetadata>()
+            .await
+        {
             Ok(val) => {
-                if let Some(correct_token) = val.1 {
-                    if &correct_token != token {
+                if let Some(meta) = val.1 {
+                    if &meta.revoke != token {
                         return Response::error("No delete permissions!", 401);
                     }
                 } else {

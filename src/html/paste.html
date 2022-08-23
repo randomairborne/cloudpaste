@@ -7,6 +7,8 @@
     <link rel="shortcut icon" href="#" type="image/x-icon">
     <link rel="stylesheet" href="/main.css">
     <title>Paste {{ id }}</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
 </head>
 
 <body>
@@ -18,9 +20,10 @@
             <a hidden href="javascript:copyLink()" class="btn" id="copylink">Copy Share Link</a>
             <a hidden href="javascript:deletePaste()" id="deletebtn" class="btn">Delete Paste</a>
         </div>
-        <pre class="paste">{{ content }}</pre>
+	<pre class="paste"><code class="{{ language }}">{{ content }}<code></pre>
     </div>
 </body>
+<script>hljs.highlightAll();</script>
 <script>
     const deletebtn = document.getElementById('deletebtn');
     const linkcopy = document.getElementById('copylink')
