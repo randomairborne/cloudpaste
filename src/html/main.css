@@ -55,6 +55,7 @@ textarea {
     width: 80vw;
     height: 70vh;
     font-size: 2vh;
+    resize: none;
 }
 
 textarea::placeholder {
