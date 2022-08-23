@@ -64,6 +64,6 @@ pub fn style(_req: Request, _ctx: RouteContext<()>) -> Result<Response> {
 
 pub fn worker(_req: Request, _ctx: RouteContext<()>) -> Result<Response> {
     let mut headers = Headers::new();
-    headers.append("Content-Type", "application/javascript");
+    headers.append("Content-Type", "application/javascript")?;
     Ok(Response::ok(include_str!("html/worker.js"))?.with_headers(headers))
 }
