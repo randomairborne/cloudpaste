@@ -87,6 +87,7 @@ textarea::placeholder {
     padding: 1%;
     font-size: 200%;
     justify-content: center;
+    white-space: nowrap;
 }
 
 .paste {
@@ -97,4 +98,5 @@ textarea::placeholder {
     border-radius: 5px;
     border-width: 2px;
     padding: 10px;
+    margin-left: 10px;
 }

@@ -25,10 +25,10 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
     let router = Router::new();
     router
         .get("/", |_, _| {
-            Response::from_html(include_str!("html/index.html"))
+            Response::from_html(include_str!("assets/index.html"))
         })
         .get("/about", |_, _| {
-            Response::from_html(include_str!("html/about.html"))
+            Response::from_html(include_str!("assets/about.html"))
         })
         .get("/main.css", gets::style)
         .get("/worker.js", gets::worker)
@@ -68,7 +68,7 @@ fn error(err: &str, statuscode: u16, html: bool) -> Result<Response> {
         context.insert("error", err);
         let mut headers = Headers::new();
         headers.append("Content-Type", "text/html")?;
-        if let Ok(resp_html) = tera::Tera::one_off(include_str!("html/error.html"), &context, true)
+        if let Ok(resp_html) = tera::Tera::one_off(include_str!("assets/error.html"), &context, true)
         {
             return Ok(Response::error(resp_html, statuscode)?.with_headers(headers));
         }

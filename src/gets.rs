@@ -22,7 +22,7 @@ pub async fn template(_req: Request, ctx: RouteContext<()>) -> Result<Response> 
             context.insert("id", key);
             context.insert("content", &value);
             context.insert("language", &meta.language);
-            if let Ok(page) = tera::Tera::one_off(include_str!("html/paste.html"), &context, true) {
+            if let Ok(page) = tera::Tera::one_off(include_str!("assets/paste.html"), &context, true) {
                 return Response::from_html(page);
             }
 
@@ -59,11 +59,11 @@ pub async fn raw(_req: Request, ctx: RouteContext<()>) -> Result<Response> {
 pub fn style(_req: Request, _ctx: RouteContext<()>) -> Result<Response> {
     let mut headers = Headers::new();
     headers.append("Content-Type", "text/css")?;
-    Ok(Response::ok(include_str!("html/main.css"))?.with_headers(headers))
+    Ok(Response::ok(include_str!("assets/main.css"))?.with_headers(headers))
 }
 
 pub fn worker(_req: Request, _ctx: RouteContext<()>) -> Result<Response> {
     let mut headers = Headers::new();
     headers.append("Content-Type", "application/javascript")?;
-    Ok(Response::ok(include_str!("html/worker.js"))?.with_headers(headers))
+    Ok(Response::ok(include_str!("assets/worker.js"))?.with_headers(headers))
 }

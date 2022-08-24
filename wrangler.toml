@@ -9,8 +9,5 @@ kv_namespaces = [
 ]
 account_id = "10587e6bb7932116ebfce0b7c5d0178e"
 
-[vars]
-WORKERS_RS_VERSION = "0.0.9"
-
 [build]
 command = "worker-build --release"
