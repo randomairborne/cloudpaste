@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div>
+    <div class="maxwide">
         <div class="menu">
             <a href="/" class="btn">New Paste</a>
             <a href="/raw/{{ id }}" class="btn">View Raw</a>
@@ -21,7 +21,6 @@
             <a hidden href="javascript:deletePaste()" id="deletebtn" class="btn">Delete Paste</a>
         </div>
         <pre class="paste"><code id="content" class="{{ language }} hljs">{{ content }}</code></pre>
-
     </div>
 </body>
 <script>
